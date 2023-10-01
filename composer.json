@@ -1,0 +1,20 @@
+{
+    "name": "vungocngoaithuong/shop-thoi-trang",
+    "description": "Học lập trình website với thầy Lợi",
+    "authors": [
+        {
+            "name": "Vũ Ngọc Ngoại Thương",
+            "email": "thuonglun16102@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        },
+        "files": [
+            "./app/Route.php",
+            "./config/database.php"
+        ]
+    },
+    "require": {}
+}
