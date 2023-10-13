@@ -1,3 +1,13 @@
+<?php
+
+use App\Models\Category;
+//SELECT * FROM CATEGORY WHERE satus!=0 and ... order created_at desc
+
+$list = Category::where('status', '!=', 0)
+   ->select('status', 'id', 'image', 'name', 'slug')
+   ->orderBy('created_at', 'DESC')
+   ->get();
+?>
 <?php require_once '../views/backend/header.php'; ?>
 <!-- CONTENT -->
 <div class="content-wrapper">
@@ -62,26 +72,34 @@
                         </tr>
                      </thead>
                      <tbody>
-                        <tr class="datarow">
-                           <td>
-                              <input type="checkbox">
-                           </td>
-                           <td>
-                              <img src="../public/images/category.jpg" alt="category.jpg">
-                           </td>
-                           <td>
-                              <div class="name">
-                                 Tên danh mục
-                              </div>
-                              <div class="function_style">
-                                 <a href="#">Hiện</a> |
-                                 <a href="#">Chỉnh sửa</a> |
-                                 <a href="../backend/category_show.html">Chi tiết</a> |
-                                 <a href="#">Xoá</a>
-                              </div>
-                           </td>
-                           <td>Slug</td>
-                        </tr>
+                        <?php if (count($list) > 0) : ?>
+                           <?php foreach ($list as $item) : ?>
+                              <tr class="datarow">
+                                 <td>
+                                    <input type="checkbox">
+                                 </td>
+                                 <td>
+                                    <img src="../public/images/<?= $item->image; ?>" alt="<?= $item->image; ?>">
+                                 </td>
+                                 <td>
+                                    <div class="name">
+                                       <?= $item->name; ?>
+                                    </div>
+                                    <div class="function_style">
+                                       <?php if ($item->status == 1) : ?>
+                                          <a class="text-success" href="index.php?option=category&cat=status&id=<?= $item->id; ?>">Hiện</a> |
+                                       <?php else : ?>
+                                          <a class="text-danger" href="index.php?option=category&cat=status&id=<?= $item->id; ?>">Ẩn</a> |
+                                       <?php endif; ?>
+                                       <a href="index.php?option=category&cat=edit&id=<?= $item->id; ?>">Chỉnh sửa</a> |
+                                       <a href="index.php?option=category&cat=show&id=<?= $item->id; ?>">Chi tiết</a> |
+                                       <a href="index.php?option=category&cat=delete&id=<?= $item->id; ?>">Xoá</a>
+                                    </div>
+                                 </td>
+                                 <td><?= $item->slug; ?></td>
+                              </tr>
+                           <?php endforeach; ?>
+                        <?php endif; ?>
                      </tbody>
                   </table>
                </div>
