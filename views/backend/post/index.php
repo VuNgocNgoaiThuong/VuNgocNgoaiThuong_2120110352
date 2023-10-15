@@ -1,18 +1,18 @@
 <?php
 
-use App\Models\Product;
-use App\Models\Category;
-use App\Models\Brand;
+use App\Models\Post;
+use App\Models\Topic;
 
+//SELECT * FROM post WHERE satus!=0 and ... order created_at desc
 
-$list = Product::join('category', 'category.id', '=', 'product.category_id')
-   ->where('product.status', '!=', 0)
-   ->orderBy('product.created_at', 'DESC')
-   ->select("product.*", "category.name as category_name")
-   ->get();
-
+$list = Post::join('topic','topic.id','=','post.topic_id')
+->where('post.status', '!=', 0)
+->orderBy('post.created_at', 'DESC')
+->select("post.*","topic.name as topic_name")
+->get();
 
 ?>
+
 <?php require_once '../views/backend/header.php'; ?>
 <!-- CONTENT -->
 <div class="content-wrapper">
@@ -20,8 +20,8 @@ $list = Product::join('category', 'category.id', '=', 'product.category_id')
       <div class="container-fluid">
          <div class="row mb-2">
             <div class="col-sm-12">
-               <h1 class="d-inline">Tất cả sản phẩm</h1>
-               <a href="index.php?option=product&cat=create" class="btn btn-sm btn-primary">Thêm sản phẩm</a>
+               <h1 class="d-inline">Tất cả bài viết</h1>
+               <a href="index.php?option=post&cat=create" class="btn btn-sm btn-primary">Thêm bài viết</a>
             </div>
          </div>
       </div>
@@ -29,23 +29,19 @@ $list = Product::join('category', 'category.id', '=', 'product.category_id')
    <!-- Main content -->
    <section class="content">
       <div class="card">
-         <div class="card-header">
-            <select name="" id="" class="form-control d-inline" style="width:100px;">
-               <option value="">Xoá</option>
-            </select>
-            <button class="btn btn-sm btn-success">Áp dụng</button>
+         <div class="card-header p-2">
+            Noi dung
          </div>
-         <div class="card-body">
-            <table class="table table-bordered" id="mytable">
+         <div class="card-body p-2">
+            <table class="table table-bordered">
                <thead>
                   <tr>
                      <th class="text-center" style="width:30px;">
                         <input type="checkbox">
                      </th>
                      <th class="text-center" style="width:130px;">Hình ảnh</th>
-                     <th>Tên sản phẩm</th>
+                     <th>Tiêu đề bài viết</th>
                      <th>Tên danh mục</th>
-                     <th>Tên thương hiệu</th>
                   </tr>
                </thead>
                <tbody>
@@ -56,39 +52,36 @@ $list = Product::join('category', 'category.id', '=', 'product.category_id')
                               <input type="checkbox">
                            </td>
                            <td>
-                              <img style="width: 50px; height: 50px;" src="../public/images/product/<?= $item->image; ?>" alt="<?= $item->image; ?>">
+                           <img style="width: 40px; height: 40px;" src="../public/images/post/<?= $item->image; ?>" alt="<?= $item->image; ?>">
                            </td>
                            <td>
                               <div class="name">
-                                 <?= $item->name; ?>
+                                 <?= $item->title; ?>
                               </div>
                               <div class="function_style">
                                  <?php if ($item->status == 1) : ?>
-                                    <a href='index.php?option=product&cat=status&id=<?= $item->id; ?>' class="btn btn-success btn-xs">
+                                    <a href='index.php?option=post&cat=status&id=<?= $item->id; ?>' class="btn btn-success btn-xs">
                                        <i class="fas fa-toggle-on"></i> Hiện
                                     </a>
                                  <?php else : ?>
-                                    <a href='index.php?option=product&cat=status&id=<?= $item->id; ?>' class="btn btn-danger btn-xs">
+                                    <a href='index.php?option=post&cat=status&id=<?= $item->id; ?>' class="btn btn-danger btn-xs">
                                        <i class="fas fa-toggle-off"></i> Ẩn
                                     </a>
                                  <?php endif; ?>
-                                 <a href="index.php?option=product&cat=edit&id=<?= $item->id; ?>" class="btn btn-primary btn-xs">
+                                 <a href="index.php?option=post&cat=edit&id=<?= $item->id; ?>" class="btn btn-primary btn-xs">
                                     <i class="fas fa-edit"></i> Chỉnh sửa
                                  </a>
-                                 <a href="index.php?option=product&cat=show&id=<?= $item->id; ?>" class="btn btn-info btn-xs">
+                                 <a href="index.php?option=post&cat=show&id=<?= $item->id; ?>" class="btn btn-info btn-xs">
                                     <i class="fas fa-eye"></i> Chi tiết
                                  </a>
-                                 <a href="index.php?option=product&cat=delete&id=<?= $item->id; ?>" class="btn btn-danger btn-xs">
+                                 <a href="index.php?option=post&cat=delete&id=<?= $item->id; ?>" class="btn btn-danger btn-xs">
                                     <i class="fas fa-trash"></i>Xoá
                                  </a>
                               </div>
                            </td>
-
-                           <td> <?= $item->category_name ?></td>
                            
-                                 <td> <?= $item->brand_name ?></td>
-
-                            
+                                 <td><?= $item->topic_name; ?></td>
+                              
                         </tr>
                      <?php endforeach; ?>
                   <?php endif; ?>

@@ -4,12 +4,13 @@ use App\Models\Category;
 //SELECT * FROM CATEGORY WHERE satus!=0 and ... order created_at desc
 
 $list = Category::where('status', '!=', 0)
-   ->select('status', 'id', 'image', 'name', 'slug')
    ->orderBy('created_at', 'DESC')
    ->get();
+   
 ?>
 <?php require_once '../views/backend/header.php'; ?>
 <!-- CONTENT -->
+<form action="index.php?option=category&cat=process" method="post" enctype="multipart/form-data">
 <div class="content-wrapper">
    <section class="content-header">
       <div class="container-fluid">
@@ -25,7 +26,7 @@ $list = Category::where('status', '!=', 0)
       <div class="card">
          <div class="card-header text-right">
             <button class="btn btn-sm btn-success">
-               <i class="fa fa-save" aria-hidden="true"></i>
+               <i class="fa fa-save" aria-hidden="true" name="THEM"></i>
                Lưu
             </button>
          </div>
@@ -79,7 +80,7 @@ $list = Category::where('status', '!=', 0)
                                     <input type="checkbox">
                                  </td>
                                  <td>
-                                    <img src="../public/images/<?= $item->image; ?>" alt="<?= $item->image; ?>">
+                                 <img style="width: 50px; height: 50px;" src="../public/images/category/<?= $item->image; ?>" alt="<?= $item->image; ?>">
                                  </td>
                                  <td>
                                     <div class="name">
@@ -87,13 +88,23 @@ $list = Category::where('status', '!=', 0)
                                     </div>
                                     <div class="function_style">
                                        <?php if ($item->status == 1) : ?>
-                                          <a class="text-success" href="index.php?option=category&cat=status&id=<?= $item->id; ?>">Hiện</a> |
+                                          <a href='index.php?option=category&cat=status&id=<?= $item->id; ?>' class="btn btn-success btn-xs">
+                                             <i class="fas fa-toggle-on"></i> Hiện
+                                          </a>
                                        <?php else : ?>
-                                          <a class="text-danger" href="index.php?option=category&cat=status&id=<?= $item->id; ?>">Ẩn</a> |
+                                          <a href='index.php?option=category&cat=status&id=<?= $item->id; ?>' class="btn btn-danger btn-xs">
+                                             <i class="fas fa-toggle-off"></i> Ẩn
+                                          </a>
                                        <?php endif; ?>
-                                       <a href="index.php?option=category&cat=edit&id=<?= $item->id; ?>">Chỉnh sửa</a> |
-                                       <a href="index.php?option=category&cat=show&id=<?= $item->id; ?>">Chi tiết</a> |
-                                       <a href="index.php?option=category&cat=delete&id=<?= $item->id; ?>">Xoá</a>
+                                       <a href="index.php?option=category&cat=edit&id=<?= $item->id; ?>" class="btn btn-primary btn-xs">
+                                          <i class="fas fa-edit"></i> Chỉnh sửa
+                                       </a>
+                                       <a href="index.php?option=category&cat=show&id=<?= $item->id; ?>" class="btn btn-info btn-xs">
+                                          <i class="fas fa-eye"></i> Chi tiết
+                                       </a>
+                                       <a href="index.php?option=category&cat=delete&id=<?= $item->id; ?>" class="btn btn-danger btn-xs">
+                                          <i class="fas fa-trash"></i>Xoá
+                                       </a>
                                     </div>
                                  </td>
                                  <td><?= $item->slug; ?></td>
@@ -108,5 +119,6 @@ $list = Category::where('status', '!=', 0)
       </div>
    </section>
 </div>
+</form>
 <!-- END CONTENT-->
 <?php require_once '../views/backend/footer.php'; ?>
