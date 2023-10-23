@@ -11,7 +11,7 @@ $capsule->addConnection([
     'password' => '',
     'charset' => 'utf8',
     'collation' => 'utf8_unicode_ci',
-    'prefix' => '0352_',
+    'prefix' => '0009_',
 ]);
 
 // Set the event dispatcher used by Eloquent models... (optional)
