@@ -36,6 +36,7 @@ if (isset($_POST['THEM'])) {
     //insert into menu
     $menu->save();
     //Chuyển hướng về index
+    MyClass::set_flash('message',['msg'=>'Thêm thành công','type'=>'success']);
     header("location:index.php?option=menu");
 }
 
@@ -43,6 +44,7 @@ if (isset($_POST['CAPNHAT'])) {
     $id=$_POST['id'];
     $menu = menu::find($id);
     if ($menu == null) {
+        MyClass::set_flash('message',['msg'=>'Lỗi trang 404','type'=>'danger']);
         header("location:index.php?option=menu");
     }
     //Lấy từ form
@@ -77,5 +79,6 @@ if (isset($_POST['CAPNHAT'])) {
     //insert into menu
     $menu->save();
     //Chuyển hướng về index
+    MyClass::set_flash('message',['msg'=>'Sửa thành công','type'=>'success']);
     header("location:index.php?option=menu");
 }

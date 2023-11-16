@@ -3,12 +3,9 @@
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
+use App\Libraries\MyClass;
 
-$id = $_REQUEST['id'];
-$product = Product::find($id);
-if ($product == null) {
-   header("location:index.php?option=product");
-}
+
 $list_brand = Brand::where('status', '!=', 0)->orderBy('created_at', 'DESC')->get();
 $list_category = Category::where('status', '!=', 0)->orderBy('created_at', 'DESC')->get();
 $brand_id_html = '';
@@ -18,6 +15,12 @@ foreach ($list_brand as $brand) {
 }
 foreach ($list_category as $category) {
    $category_id_html .= "<option value='$category->id'>$category->name</option> ";
+}
+$id = $_REQUEST['id'];
+$product = Product::find($id);
+if ($product == null) {
+   MyClass::set_flash('message',['msg'=>'Lỗi trang 404','type'=>'danger']);
+   header("location:index.php?option=product");
 }
 ?>
 <?php require_once '../views/backend/header.php'; ?>

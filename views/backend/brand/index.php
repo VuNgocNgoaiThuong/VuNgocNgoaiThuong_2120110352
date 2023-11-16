@@ -20,13 +20,23 @@ $list = Brand::where('status', '!=', 0)->orderBy('created_at', 'DESC')->get();
         <!-- Main content -->
         <section class="content">
             <div class="card">
-                <div class="card-header text-right">
-                    <button class="btn btn-sm btn-success" type="submit" name="THEM">
-                        <i class="fa fa-save" aria-hidden="true"></i>
-                        Lưu
-                    </button>
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <a href="index.php?option=brand">Tất cả</a> |
+                            <a href="index.php?option=brand&cat=trash">Thùng rác</a>
+
+                        </div>
+                        <div class="col-md-6 text-right">
+                            <button class="btn btn-sm btn-success" type="submit" name="THEM">
+                                <i class="fa fa-save" aria-hidden="true"></i>
+                                Lưu
+                            </button>
+                        </div>
+                    </div>
                 </div>
                 <div class="card-body">
+                    <?php require_once '../views/backend/message.php'; ?>
                     <div class="row">
                         <div class="col-md-4">
                             <div class="mb-3">

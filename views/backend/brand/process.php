@@ -22,8 +22,6 @@ if (isset($_POST['THEM'])) {
         }
     }
 
-
-
     //tự sinh ra
 
     $brand->created_at = date('Y-m-d H:i:s');
@@ -33,6 +31,7 @@ if (isset($_POST['THEM'])) {
     //insert into brand
     $brand->save();
     //Chuyển hướng về index
+    MyClass::set_flash('message',['msg'=>'Thêm thành công','type'=>'success']);
     header("location:index.php?option=brand");
 }
 
@@ -40,6 +39,7 @@ if (isset($_POST['CAPNHAT'])) {
     $id=$_POST['id'];
     $brand = Brand::find($id);
     if ($brand == null) {
+        MyClass::set_flash('message',['msg'=>'Lỗi trang 404','type'=>'danger']);
         header("location:index.php?option=brand");
     }
     //Lấy từ form
@@ -74,5 +74,6 @@ if (isset($_POST['CAPNHAT'])) {
     //insert into brand
     $brand->save();
     //Chuyển hướng về index
+    MyClass::set_flash('message',['msg'=>'Sửa thành công','type'=>'success']);
     header("location:index.php?option=brand");
 }

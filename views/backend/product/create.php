@@ -36,7 +36,7 @@ foreach ($list_category as $category) {
                </a>
                <button type="submit" class="btn btn-sm btn-success" name="THEM">
                   <i class="fa fa-save" aria-hidden="true"></i>
-                  Thêm sản phẩm
+                  Lưu
                </button>
             </div>
             <div class="card-body">
@@ -79,6 +79,10 @@ foreach ($list_category as $category) {
                      <div class="mb-3">
                         <label>Giá bán (*)</label>
                         <input type="number" value="10000" min="10000" name="price" class="form-control">
+                     </div>
+                     <div class="mb-3">
+                        <label>Giá khuyến mãi (*)</label>
+                        <input type="number" value="10000" min="10000" name="pricesale" class="form-control">
                      </div>
                      <div class="mb-3">
                         <label>Hình đại diện</label>

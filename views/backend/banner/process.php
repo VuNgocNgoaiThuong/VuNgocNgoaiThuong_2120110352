@@ -7,10 +7,8 @@ if (isset($_POST['THEM'])) {
     $banner = new Banner();
     //Lấy từ form
     $banner->name = $_POST['name'];
-    $banner->slug = (strlen($_POST['slug']) > 0) ? $_POST['slug'] : MyClass::str_slug($_POST['name']);
-    $banner->parent_id=$_POST['parent_id'];
-    //$banner->sort_order=$_POST['sort_order'];
-    //$banner->level=1;
+    $banner->link = $_POST['link'];
+    $banner->position=$_POST['position'];
 
     $banner->status = $_POST['status'];
     //Xử lý upload file
@@ -36,19 +34,21 @@ if (isset($_POST['THEM'])) {
     //insert into banner
     $banner->save();
     //Chuyển hướng về index
+    MyClass::set_flash('message',['msg'=>'Thêm thành công','type'=>'success']);
     header("location:index.php?option=banner");
 }
 
 if (isset($_POST['CAPNHAT'])) {
     $id=$_POST['id'];
-    $banner = banner::find($id);
+    $banner = Banner::find($id);
     if ($banner == null) {
+        MyClass::set_flash('message',['msg'=>'Lỗi trang 404','type'=>'danger']);
         header("location:index.php?option=banner");
     }
     //Lấy từ form
     $banner->name = $_POST['name'];
-    $banner->slug = (strlen($_POST['slug']) > 0) ? $_POST['slug'] : MyClass::str_slug($_POST['name']);
-    $banner->description = $_POST['description'];
+    $banner->link = $_POST['link'];
+    $banner->position=$_POST['position'];
     $banner->status = $_POST['status'];
     //Xử lý upload file
     if (strlen($_FILES['image']['name']) > 0) {
@@ -77,5 +77,6 @@ if (isset($_POST['CAPNHAT'])) {
     //insert into banner
     $banner->save();
     //Chuyển hướng về index
+    MyClass::set_flash('message',['msg'=>'Sửa thành công','type'=>'success']);
     header("location:index.php?option=banner");
 }

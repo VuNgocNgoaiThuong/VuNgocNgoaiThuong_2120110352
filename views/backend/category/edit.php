@@ -3,10 +3,17 @@
 use App\Models\Category;
 //SELECT * FROM CATEGORY WHERE satus!=0 and ... order created_at desc
 
+$id = $_REQUEST['id'];
+$category = Category::find($id);
+if ($category == null) {
+}
 $list = Category::where('status', '!=', 0)
-   ->select('status', 'id', 'image', 'name', 'slug')
    ->orderBy('created_at', 'DESC')
    ->get();
+$parent_id_html = '';
+foreach ($list as $category) {
+   $parent_id_html .= "<option value='$category->id'>$category->name</option> ";
+}
 ?>
 <?php require_once '../views/backend/header.php'; ?>
 <!-- CONTENT -->
@@ -34,17 +41,17 @@ $list = Category::where('status', '!=', 0)
                <div class="col-md-4">
                   <div class="mb-3">
                      <label>Tên danh mục (*)</label>
-                     <input type="text" name="name" id="name" placeholder="Nhập tên danh mục" class="form-control" onkeydown="handle_slug(this.value);">
+                     <input type="text" value="<?= $category->name; ?>" name="name" id="name" placeholder="Nhập tên danh mục" class="form-control">
                   </div>
                   <div class="mb-3">
                      <label>Slug</label>
-                     <input type="text" name="slug" id="slug" placeholder="Nhập slug" class="form-control">
+                     <input type="text" value="<?= $category->slug; ?>" name="slug" id="slug" placeholder="Nhập slug" class="form-control">
                   </div>
                   <div class="mb-3">
                      <label>Danh mục cha (*)</label>
                      <select name="parent_id" class="form-control">
-                        <option value="">None</option>
-                        <option value="1">Tên danh mục</option>
+                        <option value="<?= $category->parent_id; ?>">None</option>
+                        <option value="<?= $category->parent_id; ?>"><?= $parent_id_html; ?></option>
                      </select>
                   </div>
                   <div class="mb-3">
@@ -59,7 +66,7 @@ $list = Category::where('status', '!=', 0)
                      </select>
                   </div>
                </div>
-               
+
             </div>
          </div>
       </div>

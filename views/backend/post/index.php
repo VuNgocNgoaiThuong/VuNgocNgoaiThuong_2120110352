@@ -30,9 +30,15 @@ $list = Post::join('topic','topic.id','=','post.topic_id')
    <section class="content">
       <div class="card">
          <div class="card-header p-2">
-            Noi dung
+         <div class="row">
+               <div class="col-md-6">
+                  <a href="index.php?option=post">Tất cả</a> |
+                  <a href="index.php?option=post&cat=trash">Thùng rác</a>
+               </div>
+            </div>
          </div>
          <div class="card-body p-2">
+         <?php require_once '../views/backend/message.php'; ?>
             <table class="table table-bordered">
                <thead>
                   <tr>

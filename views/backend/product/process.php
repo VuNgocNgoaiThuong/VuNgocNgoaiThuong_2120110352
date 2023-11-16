@@ -12,6 +12,7 @@ if (isset($_POST['THEM'])) {
     $product->brand_id=$_POST['brand_id'];
     $product->detail=$_POST['detail'];
     $product->price=$_POST['price'];
+    $product->pricesale=$_POST['pricesale'];
     $product->status = $_POST['status'];
     //Xử lý upload file
     if (strlen($_FILES['image']['name']) > 0) {
@@ -36,6 +37,7 @@ if (isset($_POST['THEM'])) {
     //insert into product
     $product->save();
     //Chuyển hướng về index
+    MyClass::set_flash('message',['msg'=>'Thêm thành công','type'=>'success']);
     header("location:index.php?option=product");
 }
 
@@ -43,6 +45,7 @@ if (isset($_POST['CAPNHAT'])) {
     $id=$_POST['id'];
     $product = Product::find($id);
     if ($product == null) {
+        MyClass::set_flash('message',['msg'=>'Lỗi trang 404','type'=>'danger']);
         header("location:index.php?option=product");
     }
     //Lấy từ form
@@ -52,6 +55,7 @@ if (isset($_POST['CAPNHAT'])) {
     $product->brand_id=$_POST['brand_id'];
     $product->detail=$_POST['detail'];
     $product->price=$_POST['price'];
+    $product->pricesale=$_POST['pricesale'];
     $product->status = $_POST['status'];
     //Xử lý upload file
     if (strlen($_FILES['image']['name']) > 0) {
@@ -69,8 +73,6 @@ if (isset($_POST['CAPNHAT'])) {
         }
     }
 
-
-
     //tự sinh ra
 
     $product->updated_at = date('Y-m-d H:i:s');
@@ -80,5 +82,6 @@ if (isset($_POST['CAPNHAT'])) {
     //insert into product
     $product->save();
     //Chuyển hướng về index
+    MyClass::set_flash('message',['msg'=>'Sửa thành công','type'=>'success']);
     header("location:index.php?option=product");
 }

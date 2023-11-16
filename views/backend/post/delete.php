@@ -1,10 +1,12 @@
 <?php
 
 use App\Models\post;
+use App\Libraries\MyClass;
 
 $id = $_REQUEST['id'];
 $post = Post::find($id);
 if ($post == null) {
+    MyClass::set_flash('message',['msg'=>'Lỗi trang 404','type'=>'danger']);
     header("location:index.php?option=post");
 }
 //

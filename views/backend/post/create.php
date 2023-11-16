@@ -32,7 +32,7 @@ foreach ($list_topic as $topic) {
             </a>
             <button class="btn btn-sm btn-success" name="THEM">
                <i class="fa fa-save" aria-hidden="true"></i>
-               Thêm bài viết
+               Lưu
             </button>
          </div>
          <div class="card-body">
@@ -45,6 +45,10 @@ foreach ($list_topic as $topic) {
                   <div class="mb-3">
                      <label>Slug</label>
                      <input type="text" name="slug" class="form-control">
+                  </div>
+                  <div class="mb-3">
+                     <label>Type</label>
+                     <input type="text" name="type" class="form-control">
                   </div>
                   <div class="mb-3">
                      <label>Chi tiết (*)</label>

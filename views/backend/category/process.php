@@ -31,6 +31,7 @@ if (isset($_POST['THEM'])) {
     //insert into category
     $category->save();
     //Chuyển hướng về index
+    MyClass::set_flash('message',['msg'=>'Thêm thành công','type'=>'success']);
     header("location:index.php?option=category");
 }
 
@@ -38,12 +39,13 @@ if (isset($_POST['CAPNHAT'])) {
     $id = $_POST['id'];
     $category = category::find($id);
     if ($category == null) {
+        MyClass::set_flash('message',['msg'=>'Lỗi trang 404','type'=>'danger']);
         header("location:index.php?option=category");
     }
     //Lấy từ form
     $category->name = $_POST['name'];
     $category->slug = (strlen($_POST['slug']) > 0) ? $_POST['slug'] : MyClass::str_slug($_POST['name']);
-    $category->description = $_POST['description'];
+    $category->parent_id = $_POST['parent_id'];
     $category->status = $_POST['status'];
     //Xử lý upload file
     if (strlen($_FILES['image']['name']) > 0) {
@@ -72,5 +74,6 @@ if (isset($_POST['CAPNHAT'])) {
     //insert into category
     $category->save();
     //Chuyển hướng về index
+    MyClass::set_flash('message',['msg'=>'Sửa thành công','type'=>'success']);
     header("location:index.php?option=category");
 }

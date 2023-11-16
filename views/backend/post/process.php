@@ -9,6 +9,7 @@ if (isset($_POST['THEM'])) {
     $post->title = $_POST['title'];
     $post->slug = (strlen($_POST['slug']) > 0) ? $_POST['slug'] : MyClass::str_slug($_POST['title']);
     $post->detail = $_POST['detail'];
+    $post->type = $_POST['type'];
     $post->topic_id = $_POST['topic_id'];
 
     $post->status = $_POST['status'];
@@ -24,8 +25,6 @@ if (isset($_POST['THEM'])) {
         }
     }
 
-
-
     //tự sinh ra
 
     $post->created_at = date('Y-m-d H:i:s');
@@ -35,6 +34,7 @@ if (isset($_POST['THEM'])) {
     //insert into post
     $post->save();
     //Chuyển hướng về index
+    MyClass::set_flash('message',['msg'=>'Thêm thành công','type'=>'success']);
     header("location:index.php?option=post");
 }
 
@@ -42,6 +42,7 @@ if (isset($_POST['CAPNHAT'])) {
     $id = $_POST['id'];
     $post = post::find($id);
     if ($post == null) {
+        MyClass::set_flash('message',['msg'=>'Lỗi trang 404','type'=>'danger']);
         header("location:index.php?option=post");
     }
     //Lấy từ form
@@ -77,5 +78,6 @@ if (isset($_POST['CAPNHAT'])) {
     //insert into post
     $post->save();
     //Chuyển hướng về index
+    MyClass::set_flash('message',['msg'=>'Sửa thành công','type'=>'success']);
     header("location:index.php?option=post");
 }
